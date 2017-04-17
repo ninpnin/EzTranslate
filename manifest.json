@@ -1,0 +1,29 @@
+{
+
+  "manifest_version": 2,
+  "name": "EasyTranslate",
+  "version": "1.0",
+
+  "description": "Offers words translations on pdf files",
+
+  "icons": {
+    "48": "icons/hideIMG.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*.pdf"],
+      "js": ["thirdParty/jquery.js",
+            "translate.js"
+      ],
+      "run_at": "document_end"
+    }
+    
+  ],
+
+  "background":
+  {
+      "scripts": ["thirdParty/jquery-2.0.3.js", "background.js"]
+  }
+
+}
