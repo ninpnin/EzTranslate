@@ -1,0 +1,30 @@
+{
+
+  "manifest_version": 2,
+  "name": "EzTranslate",
+  "version": "1.0",
+  "permissions": ["https://translate.yandex.net"],
+  "description": "Offers words translations on pdf files",
+
+  "icons": {
+    "48": "icons/hideIMG.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*.pdf"],
+      "js": ["thirdParty/jquery.js",
+            "translate.js",
+            "yaTranslate.js"          
+      ],
+      "css": ["boxstyle.css"],
+      "run_at": "document_end"
+    }
+    
+  ],
+
+  "permissions": [
+      "https://translate.yandex.net/*"
+  ]
+
+}

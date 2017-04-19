@@ -15,6 +15,8 @@ function triggerSelection() {
   current = document.getSelection().toString();
   setTimeout(timeOut,300);
 }
+//      "matches": ["*://*/*.pdf"],
+
 
 function timeOut() {
 	previous = current;
@@ -40,6 +42,20 @@ function translate(text) {
 	return lastTranslation;
 }
 
+window.onload = initBox();
+
 function initBox() {
-	
+	var iDiv = document.createElement('div');
+	iDiv.id = 'wordBox';
+	iDiv.className = 'wordBox';
+	document.getElementsByTagName('body')[0].appendChild(iDiv);
 }
+
+function updateBox(text) {
+	console.log("UPDATE BOX: " + text);
+	var box = document.getElementById("wordBox");
+	box.innerHTML = "<div class='smallerBox'><br><br>" + current + "<br><hr style='height:7px; visibility:hidden;' />" + text + "</div>";
+}
+
+
+

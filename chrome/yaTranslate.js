@@ -20,13 +20,14 @@
 	    sOldParentPos = '',
 	    bLeaveObject = true,
 
-	    showTranslateText = function(adr, obResult) {
+	    showTranslateText = function(adr) {
 	    	//console.log(adr);
 	      $.getJSON(
 	        adr,
 	        function(data) {
 	        	if( ('code' in data) && (data.code == 200) && ('text' in data) ) {
 	        		console.log(data.text[0]);
+	        		updateBox(data.text[0]);
 	        		//obResult.html(data.text[0]);
 	        	}
 	        }
@@ -39,15 +40,16 @@
 		  	    sAdr = '',
 		  	    oParent = $(ob);
 
+		  	    var splitInput = input.slice(Math.max(input.length-30, 0));
 	      		if( !$.isEmptyObject(dstList) ) {
 	      			for(s in dstList) {
 	      				sAdr = setting.adrtranslate
 	      				  .replace(/\[apikey\]/, setting.apikey)
 	      				  .replace(/\[lang\]/, setting.srclang + '-' + s)
-	      				  .replace(/\[text\]/, encodeURIComponent(input))
+	      				  .replace(/\[text\]/, encodeURIComponent(splitInput))
 	      				  .replace(/\[format\]/, 'plain');
 
-	      				showTranslateText(sAdr, null);
+	      				showTranslateText(sAdr);
 	      			}
 	      		}
 	    };

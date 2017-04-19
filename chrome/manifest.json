@@ -1,7 +1,7 @@
 {
 
   "manifest_version": 2,
-  "name": "EasyTranslate",
+  "name": "EzTranslate",
   "version": "1.0",
   "permissions": ["https://translate.yandex.net"],
   "description": "Offers words translations on pdf files",
@@ -17,6 +17,7 @@
             "translate.js",
             "yaTranslate.js"          
       ],
+      "css": ["boxstyle.css"],
       "run_at": "document_end"
     }
     
@@ -24,11 +25,6 @@
 
   "permissions": [
       "https://translate.yandex.net/*"
-  ],
-
-  "background":
-  {
-      "scripts": ["thirdParty/jquery.js"]
-  }
+  ]
 
 }
