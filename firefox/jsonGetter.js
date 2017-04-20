@@ -28,7 +28,6 @@
 	        	if( ('code' in data) && (data.code == 200) && ('text' in data) ) {
 	        		console.log(data.text[0]);
 	        		updateBox(data.text[0]);
-	        		//obResult.html(data.text[0]);
 	        	}
 	        }
 	      );
@@ -55,6 +54,7 @@
 	    };
 
 	$.fn.yaTranslate = function(param, input) {
+
 		var adrList = setting.adrlanglist,
 		    dstList = setting.dstlanglist;
 
@@ -64,10 +64,12 @@
 			.replace(/\[apikey\]/, setting.apikey)
 			.replace(/\[srclang\]/, setting.srclang);
 
+		console.log("yaTranslate " + adrList);
 
 		$.getJSON(
 			adrList,
 			function(data) {
+
 				var dirs = data.dirs || [],
 				    langs = data.langs || {},
 				    aDstLang = setting.dstlang.split(','),

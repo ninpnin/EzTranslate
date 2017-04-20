@@ -18,9 +18,16 @@ body {
 }
 
 .smallerBox {
-	margin-bottom: 12px;
+	margin-bottom: 8px;
 	color: black;
-	margin-left: 8px;
+	margin-left: 10px;
 	font-size: 20px;
+
+}
+
+.yandex {
+	color: grey;
+	margin-left: 10px;
+	margin-bottom: 8px;
 
 }

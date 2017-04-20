@@ -3,11 +3,10 @@
   "manifest_version": 2,
   "name": "EzTranslate",
   "version": "1.0",
-  "permissions": ["https://translate.yandex.net"],
-  "description": "Offers words translations on pdf files",
+  "description": "Offers words translations on PDF files. Powered by Yandex.Translate",
 
   "icons": {
-    "48": "icons/hideIMG.png"
+    "48": "icons/EzTranslate.png"
   },
 
   "content_scripts": [
@@ -15,7 +14,7 @@
       "matches": ["*://*/*.pdf"],
       "js": ["thirdParty/jquery.js",
             "translate.js",
-            "yaTranslate.js"          
+            "jsonGetter.js"          
       ],
       "css": ["boxstyle.css"],
       "run_at": "document_end"
@@ -23,8 +22,13 @@
     
   ],
 
+  "options_ui": {
+    "page": "options.html"
+  },
+
   "permissions": [
-      "https://translate.yandex.net/*"
+      "https://translate.yandex.net/*",
+      "storage"
   ]
 
 }
