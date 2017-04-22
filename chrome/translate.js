@@ -4,32 +4,38 @@ var previous = "";
 var current = "";
 var translation = "";
 
-$( "body" ).click(function() {
+$( "body" ).mouseup(function() {
   triggerSelection();
 });
 
-console.log("KETÄ??");
+$(document).keypress("h", function(e) {
+  	toggleDrawerHide();
+});
+
 
 function triggerSelection() {
+  current = document.getSelection();
+  setTimeout(timeOut, 300);
 
-  current = document.getSelection().toString();
-  setTimeout(timeOut,300);
 }
 //      "matches": ["*://*/*.pdf"],
 
 
 function timeOut() {
 	previous = current;
-	current = document.getSelection().toString();
+	current = window.getSelection().toString();
 
 	if (previous == current && current != "") {
-  		//console.log("Selected: " + current);
+  		console.log("Selected: " + current);
   		translate(current);
+	} else {
+		translate("what a disgusting browser");
 	}
 }
 
 function translate(text) {
-
+	
+	console.log("translate called");
 	jQuery(function($) {
 		var settings = {
 			srclang: 'en',                                // source language
@@ -39,23 +45,51 @@ function translate(text) {
 
 		jQuery("div").yaTranslate(settings, text);
 	});
-	return lastTranslation;
 }
 
-window.onload = initBox();
+document.onload = initBox();
 
 function initBox() {
+
+	console.log($);
+
 	var iDiv = document.createElement('div');
 	iDiv.id = 'wordBox';
 	iDiv.className = 'wordBox';
 	document.getElementsByTagName('body')[0].appendChild(iDiv);
+	console.log(document.getElementById("wordBox"));
+
 }
 
 function updateBox(text) {
 	console.log("UPDATE BOX: " + text);
 	var box = document.getElementById("wordBox");
 	box.innerHTML = "<div class='smallerBox'><br><br>" + current + "<br><hr style='height:7px; visibility:hidden;' />" + text + "</div>";
+	$("#wordBox").toggle(true);
+
 }
 
 
 
+function toggleDrawerHide() {
+	console.log("TOGGLE DRAWER HIDING");
+	//var box = document.getElementById("wordBox");
+	$("#wordBox").toggle();
+
+}
+
+
+
+
+
+
+
+
+chrome.runtime.onMessage.addListener( 
+    function(request, sender, sendResponse) { 
+        if (request.method == "getSelection") 
+            sendResponse({data: window.getSelection().toString()});
+        else
+            sendResponse({});
+    }
+)

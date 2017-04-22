@@ -55,6 +55,7 @@
 	    };
 
 	$.fn.yaTranslate = function(param, input) {
+
 		var adrList = setting.adrlanglist,
 		    dstList = setting.dstlanglist;
 
@@ -68,6 +69,7 @@
 		$.getJSON(
 			adrList,
 			function(data) {
+
 				var dirs = data.dirs || [],
 				    langs = data.langs || {},
 				    aDstLang = setting.dstlang.split(','),

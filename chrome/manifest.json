@@ -23,8 +23,16 @@
     
   ],
 
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+
+  },
+
   "permissions": [
-      "https://translate.yandex.net/*"
+    "activeTab",
+    "tabs",
+    "https://translate.yandex.net/*"
   ]
 
 }
