@@ -4,7 +4,7 @@
   "name": "EzTranslate",
   "version": "1.0",
   "permissions": ["https://translate.yandex.net"],
-  "description": "Offers words translations on pdf files",
+  "description": "Offers word translations on pdf files. Powered by Yandex.Translate.",
 
   "icons": {
     "48": "icons/hideIMG.png"
@@ -25,7 +25,7 @@
 
   "background": {
     "scripts": ["background.js"],
-    "persistent": false
+    "persistent": true
 
   },
 

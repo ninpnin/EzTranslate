@@ -1,7 +1,7 @@
 console.log("TÄMÄ ON PDF");
 
-var previous = "";
-var current = "";
+var previousSelection = "";
+var currentSelection = "";
 var translation = "";
 
 $( "body" ).mouseup(function() {
@@ -14,22 +14,20 @@ $(document).keypress("h", function(e) {
 
 
 function triggerSelection() {
-  current = document.getSelection();
+  currentSelection = document.getSelection().toString();
   setTimeout(timeOut, 300);
 
 }
-//      "matches": ["*://*/*.pdf"],
-
 
 function timeOut() {
-	previous = current;
-	current = window.getSelection().toString();
+	previousSelection = currentSelection;
+	currentSelection = document.getSelection().toString();
 
-	if (previous == current && current != "") {
-  		console.log("Selected: " + current);
-  		translate(current);
+	if (previousSelection == currentSelection && currentSelection != "") {
+  		console.log("Selected: " + currentSelection);
+  		translate(currentSelection);
 	} else {
-		translate("what a disgusting browser");
+		translate("diarrhea browser");
 	}
 }
 
@@ -64,12 +62,12 @@ function initBox() {
 function updateBox(text) {
 	console.log("UPDATE BOX: " + text);
 	var box = document.getElementById("wordBox");
-	box.innerHTML = "<div class='smallerBox'><br><br>" + current + "<br><hr style='height:7px; visibility:hidden;' />" + text + "</div>";
+	var translationText = "<div class='smallerBox'><br><br><br>" + currentSelection + "<br><hr style='height:7px; visibility:hidden;' />" + text + "</div>";
+	translationText = translationText + "<div class='yandex'>Powered by Yandex.Translate</div>";
+	box.innerHTML = translationText;
 	$("#wordBox").toggle(true);
 
 }
-
-
 
 function toggleDrawerHide() {
 	console.log("TOGGLE DRAWER HIDING");
@@ -77,19 +75,3 @@ function toggleDrawerHide() {
 	$("#wordBox").toggle();
 
 }
-
-
-
-
-
-
-
-
-chrome.runtime.onMessage.addListener( 
-    function(request, sender, sendResponse) { 
-        if (request.method == "getSelection") 
-            sendResponse({data: window.getSelection().toString()});
-        else
-            sendResponse({});
-    }
-)

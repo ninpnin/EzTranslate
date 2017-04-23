@@ -1,4 +1,4 @@
-console.log("TÄMÄ ON PDF");
+console.log("This is a PDF file.");
 
 var previous = "";
 var current = "";
@@ -11,19 +11,34 @@ $( "body" ).mouseup(function() {
   triggerSelection();
 });
 
-console.log("KETÄ??");
+$(document).keypress(function(event) {
+	event.preventDefault();
+	var keycode = event.keyCode || event.which;
+	console.log(keycode);
+	if(keycode == 109) {
+	  	toggleDrawerHide();
+	  	event.preventDefault();
+    }
+});
+
+//Hae valittu teksti ja rajoita se 35 merkin pituuteen (lopusta laskien)
+function getSelectedText() {
+	var rawText = document.getSelection().toString();
+	rawText = rawText.slice(Math.max(rawText.length-35, 0));
+	rawText = rawText.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); 	//Poista alun ja lopun välilyönnit
+	return rawText;
+}
 
 function triggerSelection() {
-  current = document.getSelection().toString();
-  setTimeout(timeOut,300);
-
+	console.log("Something selected");
+	current = getSelectedText();
+	setTimeout(timeOut, 300);
 }
 
 
 function timeOut() {
 	previous = current;
-	current = document.getSelection().toString();
-
+	current = getSelectedText();
 	if (previous == current && current != "") {
   		//console.log("Selected: " + current);
   		translate(current);
@@ -31,7 +46,7 @@ function timeOut() {
 }
 
 function translate(text) {
-	console.log(inLanguage + "->" + outLanguage)
+	console.log("Translate " + inLanguage + "->" + outLanguage);
 	jQuery(function($) {
 		var settings = {
 			srclang: inLanguage,                                // source language
@@ -50,14 +65,28 @@ function initBox() {
 	iDiv.id = 'wordBox';
 	iDiv.className = 'wordBox';
 	document.getElementsByTagName('body')[0].appendChild(iDiv);
+
+	//Lataa asetukset – kieli
+	var getting = browser.storage.local.get("inLanguage");
+	getting.then(onGot, onError);
+
+	getting = browser.storage.local.get("outLanguage");
+	getting.then(onGot, onError);
+
+	if (inLanguage == "")
+		inLanguage = "en";
+	if (outLanguage == "")
+		outLanguage = "fi";
+
 }
 
 function updateBox(text) {
-	console.log("UPDATE BOX: " + text);
+	console.log("Update translation to " + text);
 	var box = document.getElementById("wordBox");
-	var translationText = "<div class='smallerBox'><br><br><br>" + current + "<br><hr style='height:7px; visibility:hidden;' />" + text + "</div>";
+	var translationText = "<div class='smallerBox'><br><br><hr style='height:7px; visibility:hidden;' />" + current + "<br><hr style='height:7px; visibility:hidden;' />" + text + "</div>";
 	translationText = translationText + "<div class='yandex'>Powered by Yandex.Translate</div>";
 	box.innerHTML = translationText;
+	$("#wordBox").toggle(true);
 }
 
 
@@ -66,7 +95,6 @@ function onError(error) {
 }
 
 function onGot(item) {
-  console.log("GOT");
   if (item.inLanguage) {
   	console.log("in:" + item.inLanguage);
     inLanguage = item.inLanguage;
@@ -77,13 +105,10 @@ function onGot(item) {
   }
 }
 
-var getting = browser.storage.local.get("inLanguage");
-getting.then(onGot, onError);
 
-getting = browser.storage.local.get("outLanguage");
-getting.then(onGot, onError);
+function toggleDrawerHide() {
+	//Vaihda elementin näkyvyyttä
+	console.log("Toggle drawer visibility.");
+	$("#wordBox").toggle();
 
-if (inLanguage == "")
-	inLanguage = "en";
-if (outLanguage == "")
-	outLanguage = "fi";
+}

@@ -39,7 +39,7 @@
 		  	    sAdr = '',
 		  	    oParent = $(ob);
 
-		  	    var splitInput = input.slice(Math.max(input.length-30, 0));
+		  	    var splitInput = input;
 	      		if( !$.isEmptyObject(dstList) ) {
 	      			for(s in dstList) {
 	      				sAdr = setting.adrtranslate
